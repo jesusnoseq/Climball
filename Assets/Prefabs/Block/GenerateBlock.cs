@@ -24,7 +24,7 @@ public class GenerateBlock :MonoBehaviourSingleton<GenerateBlock>
 
 
     private float minYIncreasePerStep=0.03f;
-    private float maxYIncreasePerStep=0.1f;
+    private float maxYIncreasePerStep=0.09f;
 
   
 
@@ -43,16 +43,16 @@ public class GenerateBlock :MonoBehaviourSingleton<GenerateBlock>
     void Update()
     {
         if (Time.timeSinceLevelLoad > nextActionTime ) {
+            Debug.Log("GenNewBlock because of time");
             GenNewBlock();
         }
     }
 
     public void GenNewBlock(){
-        if(nLadders>=maxLadders){
-            Debug.Log("The end is generated");
+        if(nLadders>maxLadders){
             return;
         }
-        Debug.Log("GenNewBlock");
+        
         nextActionTime += period;
         period+=periodIncrease;
 
