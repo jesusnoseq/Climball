@@ -27,8 +27,10 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
     private bool isMoving;
     private Vector3 oldPosition;
     private int moveChecks;
-    private int moveChecksNeeded=3;
+    private int moveChecksNeeded=20;
     private float forceMultiplier=0.16f;
+
+    private bool colliding;
 
     void Awake() {
         pi=new PlayerInput();
@@ -87,7 +89,7 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
 
     private void FixedUpdate() {
         Vector3 newPos =  transform.position;
-        if(newPos==oldPosition){
+        if(Similar(newPos,oldPosition, 0.01f) && colliding){
             moveChecks++;
             if(moveChecks>=moveChecksNeeded){
                 playerSpriteRenderer.color=Color.red;
@@ -112,6 +114,21 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
         sm.PlayRandomizeSfx(jumpSound);
     }
 
+    // from https://answers.unity.com/questions/950927/compare-vector3.html
+    private bool Similar(Vector3 me, Vector3 other, float allowedDifference){
+        var dx = me.x - other.x;
+        if (Mathf.Abs(dx) > allowedDifference)
+            return false;
+
+        var dy = me.y - other.y;
+        if (Mathf.Abs(dy) > allowedDifference)
+            return false;
+
+        var dz = me.z - other.z;
+
+        return Mathf.Abs(dz) < allowedDifference;
+    }
+
 
     public bool IsMoving(){
         return isMoving;
@@ -120,5 +137,10 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
 
     void OnCollisionEnter2D(Collision2D collision){
         sm.PlayRandomizeSfx(hitSound);
+        colliding=true;
+    }
+
+    void OnCollisionExit2D(Collision2D other) {
+        colliding=false;
     }
 }
