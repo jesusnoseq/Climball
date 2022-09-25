@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1.5f;
         fpCamera.SetTarget(player.transform);
-        stepsAltitude = new float[exptectedSteps];
+        stepsAltitude = new float[exptectedSteps+1];
     }
 
 
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     int CaluclateCurrentStep() {
         int currentStep=0;
-        for(int i = 0; i < exptectedSteps; i++)
+        for(int i = 0; i < exptectedSteps+1; i++)
         {
             if(stepsAltitude[i]>player.transform.position.y){
                 currentStep=i;

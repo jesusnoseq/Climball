@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlinkAndDelete : MonoBehaviour
 {
 
-    private float blinkSeconds=0.75f;
+    private float blinkSeconds=1.75f;
     private float blinkInterval=0.1f;
     private float lifeTimeSeconds=35;
 

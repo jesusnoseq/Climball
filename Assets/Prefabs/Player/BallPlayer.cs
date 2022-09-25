@@ -6,8 +6,6 @@ using com.jesusnoseq.util;
 
 public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
 {
-    //public Transform powerIndicatorStart;
-    //public Transform powerIndicatorEnd;
     private float maxPowerIndicatorSize=2.5f;
     private Vector3 powerOffset=Vector3.right;
     public LineRenderer powerBar;
@@ -34,28 +32,21 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
 
     void Awake() {
         pi=new PlayerInput();
-        
     }
-
 
     void OnEnable() {
         pi.Enable();
-        //pi.PlayerMap.Shoot.performed+=Shoot;
     }
 
     void OnDisable() {
         pi.Disable();
-        //pi.PlayerMap.Shoot.performed-=Shoot;
     }
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         oldPosition=transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isMoving){
@@ -113,7 +104,6 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
     }
 
     private void Shoot(Vector2 dir, float power){
-        //Debug.Log("Shoot!");
         rb.AddForce(dir * power * forceMultiplier, ForceMode2D.Impulse);
         power=0;
         isShooting=false;
@@ -128,8 +118,7 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
     }
 
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+    void OnCollisionEnter2D(Collision2D collision){
         sm.PlayRandomizeSfx(hitSound);
     }
 }
