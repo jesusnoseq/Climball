@@ -151,7 +151,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""91be331b-ad42-4dbb-828e-390fb27e2baa"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,

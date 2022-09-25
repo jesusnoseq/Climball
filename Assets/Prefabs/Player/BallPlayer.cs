@@ -59,39 +59,22 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
         if (isMoving){
             return;
         }
-    
-
-        Vector2 cursor=pi.PlayerMap.Move.ReadValue<Vector2>();
-        if(!executed){
-            executed=false;
-            //Debug.Log(cursor);
-
-            float rot_z = Mathf.Atan2(cursor.y, cursor.x) * Mathf.Rad2Deg;
-            powerIndicator.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-            //powerIndicatorEnd.transform.LookAt(cursor);
-            //Debug.Log(powerIndicatorEnd.transform.rotation);
-            //powerIndicatorEnd.transform.Rotate(cursor * 10000, Space.Self);
-            //Quaternion target = Quaternion.Euler(0, 0, tiltAroundZ*cursor);
-            //powerIndicatorEnd.transform.Rotate(new Vector3(0, 1, 0) *target
-            //powerIndicatorEnd.transform.position=new Vector3(0,0,0);
-            //powerIndicatorEnd.transform.position=powerIndicatorEnd.transform.forward * cursor;
-        }
-
+        
+        Vector2 cursorScreen=pi.PlayerMap.Move.ReadValue<Vector2>();
+        Vector3 cursorPosition = Camera.main.ScreenToWorldPoint(cursorScreen);
+        Vector3 relativePos = cursorPosition - powerIndicator.transform.position;
+        powerIndicator.transform.rotation = Quaternion.LookRotation(Vector3.forward, relativePos);
+        Vector2 shootDirection = powerIndicator.transform.up;
 
         float shoot=pi.PlayerMap.Shoot.ReadValue<float>();
-        //Debug.Log(shoot);
-
+        
         if (pi.PlayerMap.Shoot.WasPressedThisFrame() && pi.PlayerMap.Shoot.IsPressed()){
             isShooting=true;
             powerBar.enabled=true;
             power=0;
-            //Debug.Log("starting shoot!");
-            //powerIndicator.SetPosition(0, powerIndicatorStart.position);
-            //powerIndicator.SetPosition(1, powerIndicatorStart.position);
         }
 
         if(isShooting){
-            //Debug.Log("shooting!");
             power+=powerIncrement*Time.deltaTime;
             Vector3 start = transform.position;
             Vector3 end = start+new Vector3(maxPowerIndicatorSize,0,0);
@@ -99,12 +82,12 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
             powerBar.SetPosition(0, start-transform.position+powerOffset);
             powerBar.SetPosition(1, current-transform.position+powerOffset);
             if (power>=maxPower){
-                Shoot(cursor,maxPower);
+                Shoot(shootDirection, maxPower);
             }
         }
             
         if (pi.PlayerMap.Shoot.WasReleasedThisFrame() && isShooting){
-            Shoot(cursor,power);
+            Shoot(shootDirection, power);
         }
     }
 
