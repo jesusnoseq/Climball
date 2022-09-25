@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             if(newStep>currentStep){
                 maxStep=newStep;
                 if(lastStepAdded==(newStep+1)){
-                    Debug.Log("new step by jump");
+                    Debug.Log("GenNewBlock block because jump");
                     GenerateBlock.Instance.GenNewBlock();
                 }
             }

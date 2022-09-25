@@ -70,7 +70,7 @@ public class GenerateBlock :MonoBehaviourSingleton<GenerateBlock>
         maxSizeX-=maxXReductionPerStep;
         minSizeY+=minYIncreasePerStep;
         maxSizeY+=maxYIncreasePerStep;
-        Debug.Log("minSizeX"+minSizeX+"  maxSizeX "+maxSizeX);
-        Debug.Log("minSizeY"+minSizeY+"  maxSizeY "+maxSizeY);
+        //Debug.Log("minSizeX"+minSizeX+"  maxSizeX "+maxSizeX);
+        //Debug.Log("minSizeY"+minSizeY+"  maxSizeY "+maxSizeY);
     }
 }

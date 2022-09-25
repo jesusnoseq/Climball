@@ -14,7 +14,9 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
     public GameObject powerIndicator;
     public SpriteRenderer playerSpriteRenderer;
 
-
+    public SoundManager sm;
+    public AudioClip jumpSound;
+    public AudioClip hitSound;
     private PlayerInput pi;
 
     private bool isShooting;
@@ -117,10 +119,17 @@ public class BallPlayer : MonoBehaviourSingleton<BallPlayer>
         isShooting=false;
         powerBar.enabled=false;
         isMoving=true;
+        sm.PlayRandomizeSfx(jumpSound);
     }
 
 
     public bool IsMoving(){
         return isMoving;
+    }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        sm.PlayRandomizeSfx(hitSound);
     }
 }
