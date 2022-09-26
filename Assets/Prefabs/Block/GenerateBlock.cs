@@ -42,7 +42,6 @@ public class GenerateBlock :MonoBehaviourSingleton<GenerateBlock>
     // Update is called once per frame
     void Update()
     {
-        GenNewBlock();
         if (Time.timeSinceLevelLoad > nextActionTime ) {
             Debug.Log("GenNewBlock because of time");
             GenNewBlock();
